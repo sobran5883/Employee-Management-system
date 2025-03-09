@@ -21,6 +21,17 @@ const userSchema = new mongoose.Schema({
     profileImage:{
         type:String,
     },
+    loginCount:{
+        type: Number,
+        default:0
+    },
+    status: { type: String, enum: ["working", "on leave"], default: "on leave" },
+    loginHistory: [
+        {
+          date: { type: Date, required: true },
+          count: { type: Number, default: 0 },
+        },
+      ],
     createAt:{
         type:Date,
         default:Date.now
@@ -29,7 +40,7 @@ const userSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-})
+},{timestamps: true})
 
 const User = mongoose.model("User", userSchema)
 export default User

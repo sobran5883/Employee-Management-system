@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -30,12 +32,14 @@ export default function Register() {
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || "Failed to register");
 
+            toast.success(data.message);
             console.log("User registered successfully:", data);
             navigate("/login"); // Navigate to login page upon successful registration
         } catch (err) {
             console.error(err.message);
             setError(err.message);
-        } finally {
+            toast.error(err.message);
+        } finally {    
             setLoading(false);
         }
     };
